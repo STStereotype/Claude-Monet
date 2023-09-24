@@ -3,41 +3,35 @@ package ru.red_planet.claude_monet
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import ru.red_planet.claude_monet.ui.theme.ClaudeMonetTheme
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import ru.red_planet.claude_monet.screens.main.MainScreen
+import ru.red_planet.claude_monet.screens.splash.SplashScreen
+import ru.red_planet.claude_monet.ui.theme.MainTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            ClaudeMonetTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colors.background
-                ) {
-                    Greeting("Android")
+            MainTheme {
+                val navController = rememberNavController()
+                Surface {
+                    NavHost(
+                        navController = navController,
+                        startDestination ="splash"
+                    ) {
+                        composable("splash") {
+                            SplashScreen(navController)
+                        }
+                        composable("main") {
+                            MainScreen(navController)
+                        }
+                    }
                 }
             }
         }
     }
 }
 
-@Composable
-fun Greeting(name: String) {
-    Text(text = "Hello $name!")
-}
-
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    ClaudeMonetTheme {
-        Greeting("Android")
-    }
-}
