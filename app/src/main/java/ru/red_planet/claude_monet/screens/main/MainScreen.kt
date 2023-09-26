@@ -5,18 +5,17 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import ru.red_planet.claude_monet.screens.splash.MainBottomScreen
-import ru.red_planet.claude_monet.screens.tabs.claudeMonetFlow
+import ru.red_planet.claude_monet.screens.tabs.productsFlow
 
 @Composable
 fun MainScreen(
     navController: NavController
 ) {
     val childNavController = rememberNavController()
-
     NavHost(
         navController = childNavController,
         startDestination = MainBottomScreen.ClaudeMonet.route
     ) {
-        claudeMonetFlow(childNavController)
+        productsFlow(childNavController)
     }
 }

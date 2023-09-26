@@ -29,7 +29,6 @@ fun SplashScreen(
                 .align(Alignment.Center)
         ) {
             Text(
-                modifier = Modifier.fillMaxWidth(),
                 text = "Foodies",
                 style = ClaudeMonetTheme.typography.descriptionTitle,
                 color = ClaudeMonetTheme.colors.surface,

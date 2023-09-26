@@ -1,8 +1,5 @@
-package ru.red_planet.claude_monet.screens.claudeMonet.models
+package ru.red_planet.claude_monet.screens.prducts.models
 
-import kotlinx.serialization.Serializable
-
-@Serializable
 data class Products(
     val id: Int,
     val category_id: Int,

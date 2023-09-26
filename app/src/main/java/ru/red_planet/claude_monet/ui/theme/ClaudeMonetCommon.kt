@@ -2,9 +2,6 @@ package ru.red_planet.claude_monet.ui.theme
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.staticCompositionLocalOf
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.drawBehind
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.text.TextStyle
@@ -27,6 +24,7 @@ data class ClaudeMonetColors(
 data class ClaudeMonetTypography(
     val primaryDark: TextStyle,
     val primaryLight: TextStyle,
+    val primaryWhite: TextStyle,
     val secondaryDark: TextStyle,
     val secondaryLight: TextStyle,
     val oldPrice: TextStyle,

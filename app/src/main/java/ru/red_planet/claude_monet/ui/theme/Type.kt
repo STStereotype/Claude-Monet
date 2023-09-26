@@ -19,6 +19,14 @@ val Typography = ClaudeMonetTypography(
         lineHeight = 1.15.em
     ),
     primaryLight = TextStyle(
+        color = BaseLightPalette.onSurfaceMediumEmphasis,
+        fontFamily = Roboto,
+        fontSize = 16.sp,
+        fontStyle = FontStyle.Normal,
+        fontWeight = FontWeight.W500,
+        lineHeight = 1.15.em
+    ),
+    primaryWhite = TextStyle(
         color = BaseLightPalette.surface,
         textAlign = TextAlign.Center,
         fontFamily = Roboto,

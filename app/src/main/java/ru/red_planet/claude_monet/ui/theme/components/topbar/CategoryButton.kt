@@ -1,9 +1,9 @@
 package ru.red_planet.claude_monet.ui.theme.components.topbar
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Button
+import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -14,27 +14,26 @@ import ru.red_planet.claude_monet.ui.theme.ClaudeMonetTheme
 fun CategoryButton(
     isSelected: Boolean,
     title: String,
-    productId: Int,
-    onClick: (Int) -> Unit
+    productId: Long,
+    onClick: (Long) -> Unit
 ) {
     val colorBackground =
         if (isSelected) ClaudeMonetTheme.colors.primary
-        else ClaudeMonetTheme.colors.primary.copy(alpha = 0f)
+        else ClaudeMonetTheme.colors.whiteBackground.copy(alpha = 0f)
     val textStyle =
-        if (isSelected) ClaudeMonetTheme.typography.primaryLight
+        if (isSelected) ClaudeMonetTheme.typography.primaryWhite
         else ClaudeMonetTheme.typography.primaryDark
 
-    Box(
+    Button(
+        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 12.dp),
+        elevation = null,
         modifier = Modifier
-            .padding(start = 8.dp)
-            .background(
-                color = colorBackground,
-                shape = ClaudeMonetTheme.shapes.button
-            )
-            .padding(horizontal = 16.dp, vertical = 12.dp)
-            .clickable {
-                onClick.invoke(productId)
-            }
+            .padding(start = 8.dp),
+        colors = ButtonDefaults.buttonColors(backgroundColor = colorBackground),
+        shape = ClaudeMonetTheme.shapes.button,
+        onClick = {
+            onClick.invoke(productId)
+        }
     ) {
         Text(
             text = title,
