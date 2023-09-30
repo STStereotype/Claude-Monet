@@ -24,12 +24,16 @@ import ru.red_planet.claude_monet.R
 import ru.red_planet.claude_monet.data.remote.common.RemoteListProduct
 import ru.red_planet.claude_monet.ui.theme.ClaudeMonetTheme
 import ru.red_planet.claude_monet.ui.theme.MainTheme
+import ru.red_planet.claude_monet.ui.theme.components.products.IncDecButtonCard
 import ru.red_planet.claude_monet.ui.theme.components.products.shadow
 
 @Composable
 fun ProductsCardItem(
     product: RemoteListProduct,
-    onClick: (Long) -> Unit
+    onProductClick: (Long) -> Unit,
+    countProductInCart: UInt,
+    onIncreaseClick: () -> Unit,
+    onDecreaseClick: () -> Unit
 ) {
     Card(
         shape = ClaudeMonetTheme.shapes.button,
@@ -74,37 +78,39 @@ fun ProductsCardItem(
                         style = ClaudeMonetTheme.typography.secondaryLight
                     )
                 }
-
-                Button(
-                    modifier = Modifier
-                        .padding(top = 12.dp)
-                        .fillMaxWidth()
-                        .shadow(
-                            color = Color(0x201F1F1F),
-                            offsetY = 10.dp
-                        ),
-                    contentPadding = PaddingValues(
-                        horizontal = 16.dp, vertical = 12.dp
-                    ),
-                    colors = ButtonDefaults.buttonColors(
-                        backgroundColor = ClaudeMonetTheme.colors.surface),
-                    shape = ClaudeMonetTheme.shapes.button,
-                    elevation = null,
-                    onClick = {
-                        onClick.invoke(product.productId)
-                    }
-                ) {
-                    Text(
-                        text = "${product.priceCurrent} ₽",
-                        style = ClaudeMonetTheme.typography.primaryDark
+                if (countProductInCart > 0u) {
+                    IncDecButtonCard(
+                        modifier = Modifier
+                            .padding(top = 12.dp)
+                            .fillMaxWidth(),
+                        count = countProductInCart,
+                        onIncreaseClick = { onIncreaseClick.invoke() },
+                        onDecreaseClick = { onDecreaseClick.invoke() }
                     )
-                    if (product.priceOld != null) {
+                } else {
+                    Button(
+                        modifier = Modifier
+                            .padding(top = 12.dp)
+                            .fillMaxWidth()
+                            .shadow(color = Color(0x201F1F1F), offsetY = 10.dp),
+                        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 12.dp),
+                        colors = ButtonDefaults.buttonColors(ClaudeMonetTheme.colors.surface),
+                        shape = ClaudeMonetTheme.shapes.button,
+                        elevation = null,
+                        onClick = { onProductClick.invoke(product.productId) }
+                    ) {
                         Text(
-                            modifier = Modifier
-                                .padding(start = 8.dp),
-                            text = "${product.priceOld} ₽",
-                            style = ClaudeMonetTheme.typography.oldPrice
+                            text = "${product.priceCurrent} ₽",
+                            style = ClaudeMonetTheme.typography.primaryDark
                         )
+                        if (product.priceOld != null) {
+                            Text(
+                                modifier = Modifier
+                                    .padding(start = 8.dp),
+                                text = "${product.priceOld} ₽",
+                                style = ClaudeMonetTheme.typography.oldPrice
+                            )
+                        }
                     }
                 }
             }
@@ -136,7 +142,10 @@ fun ProductsViewCardOneItem_Preview() {
     MainTheme {
         ProductsCardItem(
             product,
-            onClick = { }
+            onIncreaseClick = { },
+            onDecreaseClick = { },
+            onProductClick = { },
+            countProductInCart = 0u,
         )
 
     }
@@ -153,7 +162,10 @@ fun ProductsViewCardTwoItem_Preview() {
             ) {
                 ProductsCardItem(
                     product,
-                    onClick = { }
+                    onIncreaseClick = { },
+                    onDecreaseClick = { },
+                    onProductClick = { },
+                    countProductInCart = 0u,
                 )
             }
             Box(
@@ -162,7 +174,10 @@ fun ProductsViewCardTwoItem_Preview() {
             ) {
                 ProductsCardItem(
                     product,
-                    onClick = { }
+                    onIncreaseClick = { },
+                    onDecreaseClick = { },
+                    onProductClick = { },
+                    countProductInCart = 57u,
                 )
             }
         }

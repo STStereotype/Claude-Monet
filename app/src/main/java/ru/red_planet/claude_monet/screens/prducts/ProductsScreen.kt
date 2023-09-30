@@ -9,6 +9,7 @@ import ru.red_planet.claude_monet.screens.prducts.models.ProductsViewState
 import ru.red_planet.claude_monet.screens.prducts.views.ProductDetailsViewDisplay
 import ru.red_planet.claude_monet.screens.prducts.views.ProductsViewDisplay
 import ru.red_planet.claude_monet.screens.prducts.views.ProductsViewLoading
+import ru.red_planet.claude_monet.screens.prducts.views.ProductsViewSearch
 
 @Composable
 fun ProductsScreen(
@@ -23,25 +24,46 @@ fun ProductsScreen(
             navController = navController,
             viewState = state,
             onCategoryClick = { categoryId ->
-                productsViewModel
-                    .obtainEvent(ProductsEvent
-                        .OnCategoryClick(categoryId = categoryId))
+                productsViewModel.obtainEvent(ProductsEvent.OnCategoryClick(categoryId))
             },
-            onProductClick = { productsViewModel
-                .obtainEvent(ProductsEvent.OnProductClick(it))
+            onProductClick = { productId ->
+                productsViewModel.obtainEvent(ProductsEvent.OnProductClick(productId))
+            },
+            onFilterClick = { /* TODO - add click logic */ },
+            onSearchClick = { productsViewModel.obtainEvent(ProductsEvent.OnSearchClick) },
+            onIncreaseClick = {
+                productsViewModel.increaseCount(it)
+                productsViewModel.obtainEvent(ProductsEvent.EnterProductsDisplay)
+            },
+            onDecreaseClick = {
+                productsViewModel.decreaseCount(it)
+                productsViewModel.obtainEvent(ProductsEvent.EnterProductsDisplay)
             }
         )
+
         is ProductsViewState.DisplayProductDetails -> ProductDetailsViewDisplay(
             viewState = state,
-            onBackClick = {productsViewModel
-                .obtainEvent(ProductsEvent.EnterScreen)},
-            onButtonCartClick = { }
+            onBackClick = { productsViewModel.obtainEvent(ProductsEvent.EnterProductsDisplay) },
+            onButtonCartClick = { productId, categoryId, price ->
+                productsViewModel.addProductToCart(productId, categoryId, price)
+                productsViewModel.obtainEvent(ProductsEvent.EnterProductsDisplay)
+            }
         )
+
+        is ProductsViewState.DisplaySearchProducts -> ProductsViewSearch(
+            viewState = state,
+            onProductClick = { productId ->
+                productsViewModel.obtainEvent(ProductsEvent.OnProductClick(productId))
+            },
+            onBackClick = { productsViewModel.obtainEvent(ProductsEvent.EnterProductsDisplay) }
+        )
+
+        else -> {}
     }
 
     LaunchedEffect(key1 = viewState, block = {
         productsViewModel.updateScrollState(productsViewModel.scrollStateCategory.value!!)
         productsViewModel.updateLazyListState(productsViewModel.lazyListStateProducts.value!!)
-        productsViewModel.obtainEvent(event = ProductsEvent.EnterScreen)
+        productsViewModel.obtainEvent(event = ProductsEvent.EnterProductsDisplay)
     })
 }

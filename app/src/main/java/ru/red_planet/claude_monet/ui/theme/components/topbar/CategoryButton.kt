@@ -15,7 +15,7 @@ fun CategoryButton(
     isSelected: Boolean,
     title: String,
     productId: Long,
-    onClick: (Long) -> Unit
+    onSelectCategoryClick: (Long) -> Unit
 ) {
     val colorBackground =
         if (isSelected) ClaudeMonetTheme.colors.primary
@@ -32,7 +32,7 @@ fun CategoryButton(
         colors = ButtonDefaults.buttonColors(backgroundColor = colorBackground),
         shape = ClaudeMonetTheme.shapes.button,
         onClick = {
-            onClick.invoke(productId)
+            onSelectCategoryClick.invoke(productId)
         }
     ) {
         Text(

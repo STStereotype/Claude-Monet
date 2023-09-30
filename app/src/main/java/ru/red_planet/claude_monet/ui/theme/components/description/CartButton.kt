@@ -22,7 +22,7 @@ import ru.red_planet.claude_monet.ui.theme.components.products.shadow
 
 @Composable
 fun CartButton(
-    price: Int,
+    price: UInt,
     text: String,
     @StringRes icon: Int?,
     onClick: () -> Unit

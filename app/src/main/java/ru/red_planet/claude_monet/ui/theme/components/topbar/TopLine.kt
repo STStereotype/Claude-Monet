@@ -16,7 +16,10 @@ import androidx.compose.ui.unit.dp
 import ru.red_planet.claude_monet.R
 
 @Composable
-fun TopLine() {
+fun TopLine(
+    onFilterClick: () -> Unit,
+    onSearchClick: () -> Unit
+) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -25,7 +28,7 @@ fun TopLine() {
         verticalAlignment = Alignment.CenterVertically
     ) {
         IconButton(
-            onClick = { /* TODO - add click logic*/ }
+            onClick = { onFilterClick.invoke() }
         ) {
             Icon(
                 painter = painterResource(id = R.drawable.filter),
@@ -39,7 +42,7 @@ fun TopLine() {
             painter = painterResource(id = R.drawable.logo),
             contentDescription = "foodies")
         IconButton(
-            onClick = { /* TODO - add click logic*/ }
+            onClick = { onSearchClick.invoke() }
         ) {
             Icon(
                 painter = painterResource(id = R.drawable.search),

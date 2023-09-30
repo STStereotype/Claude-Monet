@@ -14,7 +14,7 @@ fun Categories(
     idSelectedCategory: Long,
     categories: List<RemoteListCategory>,
     scrollState: ScrollState,
-    onClick: (Long) -> Unit
+    onSelectCategoryClick: (Long) -> Unit
 ) {
     Row(
         modifier = Modifier
@@ -26,7 +26,7 @@ fun Categories(
                 isSelected = item.id == idSelectedCategory,
                 title = item.name,
                 productId = item.id,
-                onClick = onClick
+                onSelectCategoryClick = onSelectCategoryClick
             )
         }
     }
